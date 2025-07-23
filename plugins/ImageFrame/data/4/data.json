@@ -1,0 +1,54 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 4,
+  "name": "duckbig",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1397393874841764020/2560px-Big_Duck_2018_05.png?ex\u003d68818ff6\u0026is\u003d68803e76\u0026hm\u003df25f882db5a195742ff639b65c55ca056b21b1d97f64447f18f675f88176d09a\u0026",
+  "width": 4,
+  "height": 2,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753235534546,
+  "mapdata": [
+    {
+      "mapid": 133,
+      "image": "0.png",
+      "markers": []
+    },
+    {
+      "mapid": 134,
+      "image": "1.png",
+      "markers": []
+    },
+    {
+      "mapid": 135,
+      "image": "2.png",
+      "markers": []
+    },
+    {
+      "mapid": 136,
+      "image": "3.png",
+      "markers": []
+    },
+    {
+      "mapid": 137,
+      "image": "4.png",
+      "markers": []
+    },
+    {
+      "mapid": 138,
+      "image": "5.png",
+      "markers": []
+    },
+    {
+      "mapid": 139,
+      "image": "6.png",
+      "markers": []
+    },
+    {
+      "mapid": 140,
+      "image": "7.png",
+      "markers": []
+    }
+  ]
+}

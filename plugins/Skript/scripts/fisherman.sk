@@ -1,0 +1,159 @@
+options:
+    fisherman1: cod bucket named "§rFish in a Barrel" with lore "§r§bRight Click to Launch Fish"
+    fisherman2: salmon bucket named "§rFish in a Barrel" with lore "§r§bRight Click to Launch Fish"
+    fisherman3: tropical fish bucket named "§rFish in a Barrel" with lore "§r§bRight Click to Launch Fish"
+    fisherman4: pufferfish bucket named "§rFish in a Barrel" with lore "§r§bRight Click to Launch Fish"
+
+    codEffects: "{id:slowness,duration:100,amplifier:1,show_particles:1b,show_icon:1},{id:weakness,duration:100,amplifier:0,show_particles:1b,show_icon:1}"
+    salmonEffects: "{id:slowness,duration:100,amplifier:1,show_particles:1b,show_icon:1},{id:mining_fatigue,duration:100,amplifier:2,show_particles:1b,show_icon:1}"
+    tropicalEffects: "{id:slowness,duration:100,amplifier:2,show_particles:1b,show_icon:1},{id:blindness,duration:100,amplifier:0,show_particles:1b,show_icon:1}"
+    pufferEffects: "{id:slowness,duration:100,amplifier:1,show_particles:1b,show_icon:1},{id:poison,duration:50,amplifier:0,show_particles:1b,show_icon:1}"
+    
+    useTime: 8 seconds
+    hp: 10
+    radius: 2.5
+
+command /getfisherman:
+    trigger:
+        give player {@fisherman1}
+
+function getfish(current: item, p: player) :: item:
+    set {_returnItem} to {_current}
+    while {_returnItem} = {_current}:
+        set {_chance} to a random integer between 1 and 100
+        if {_chance} <= 22:
+            set {_returnItem} to {@fisherman4}
+            set item cooldown of {@fisherman4} for {_p} to {@useTime}
+        else if {_chance} <= 48:
+            set {_returnItem} to {@fisherman1}
+            set item cooldown of {@fisherman1} for {_p} to {@useTime}
+        else if {_chance} <= 74:
+            set {_returnItem} to {@fisherman2}
+            set item cooldown of {@fisherman2} for {_p} to {@useTime}
+        else:
+            set {_returnItem} to {@fisherman3}
+            set item cooldown of {@fisherman3} for {_p} to {@useTime}
+    return {_returnItem}
+  
+on right click:
+    if target block is oak button or spruce button or birch button or jungle button or acacia button or dark oak button or mangrove button or cherry button or pale oak button or bamboo button or crimson button or warped button or stone button or polished blackstone button or oak door or spruce door or birch door or jungle door or acacia door or dark oak door or mangrove door or cherry door or pale oak door or bamboo door or crimson door or warped door or jungle door or exposed copper door or weathered copper door or oxidized copper door or waxed copper door or waxed exposed copper door or waxed weathered copper door or waxed oxidized copper door or oak trapdoor or spruce trapdoor or birch trapdoor or jungle trapdoor or acacia trapdoor or dark oak trapdoor or mangrove trapdoor or cherry trapdoor or pale oak trapdoor or bamboo trapdoor or crimson trapdoor or warped trapdoor or jungle trapdoor or exposed copper trapdoor or weathered copper trapdoor or oxidized copper trapdoor or waxed copper trapdoor or waxed exposed copper trapdoor or waxed weathered copper trapdoor or waxed oxidized copper trapdoor or oak fence gate or spruce fence gate or birch fence gate or jungle fence gate or acacia fence gate or dark oak fence gate or mangrove fence gate or cherry fence gate or pale oak fence gate or bamboo fence gate or crimson fence gate or warped fence gate or jungle fence gate:
+        exit
+    if all:
+        {ingame} is false
+        gamemode of player is adventure
+    then:
+        exit
+    if item cooldown of player's tool for player > 0 seconds:
+        send action bar "&cYou are on cooldown! %cooldown of player's tool for player% left" to player
+        exit
+
+    if any:
+        player's tool is {@fisherman1}
+        player's tool is {@fisherman2}
+        player's tool is {@fisherman3}
+        player's tool is {@fisherman4}
+    then:
+        if player's tool is {@fisherman1}:
+            remove {@fisherman1} from player
+            give getfish({@fisherman1}, player) to player
+            shoot cod from player at speed 1.5
+        else if player's tool is {@fisherman2}:
+            remove {@fisherman2} from player
+            give getfish({@fisherman2}, player) to player
+            shoot salmon from player at speed 1.5
+        else if player's tool is {@fisherman3}:
+            remove {@fisherman3} from player
+            give getfish({@fisherman3}, player) to player
+            shoot tropical fish from player at speed 1.5
+        else if player's tool is {@fisherman4}:
+            remove {@fisherman4} from player
+            give getfish({@fisherman4}, player) to player
+            shoot pufferfish from player at speed 1.5
+
+        set {_fish} to last shot entity
+        set metadata "inAir" of {_fish} to true
+        set metadata "summoner" of {_fish} to player
+        set max health attribute of {_fish} to {@hp}
+        heal {_fish} by 10 hearts
+        set name of {_fish} to "%name of metadata "summoner" of {_fish}%'s Fish (%health of {_fish} * 2%❤)"
+
+every tick:
+    loop all cods and salmons and tropical fishes and pufferfishes:
+        set {_fish} to loop-entity
+        set {_nearest} to nearest living entity to {_fish}
+        set {_location} to location of {_nearest}
+        set {_summoner} to metadata "summoner" of {_fish}
+        add 1 to y-coordinate of {_location}
+        
+        if all:
+            metadata "inAir" of {_fish} is true
+            {_nearest} is not metadata "summoner" of {_fish}
+            {_nearest} is not {_fish}
+        then:
+            if any:
+                distance between {_fish} and {_nearest} is less than 1
+                distance between {_fish} and {_location} is less than 1
+            then:
+                set {_attackDamage} to {_summoner}'s attack damage attribute
+                set {_summoner}'s attack damage attribute to 7
+                make {_summoner} attack {_nearest}
+                set attack damage attribute of {_summoner} to {_attackDamage}
+                if {_fish} is a cod:
+                    apply slowness of tier 2 to {_nearest} for 5 seconds
+                    apply weakness of tier 1 to {_nearest} for 5 seconds
+                else if {_fish} is a salmon:
+                    apply slowness of tier 2 to {_nearest} for 5 seconds
+                    apply mining fatigue of tier 3 to {_nearest} for 5 seconds
+                else if {_fish} is a tropical fish:
+                    apply slowness of tier 3 to {_nearest} for 5 seconds
+                    apply blindness to {_nearest} for 5 seconds
+                else if {_fish} is a pufferfish:
+                    apply slowness of tier 2 to {_nearest} for 5 seconds
+                    apply poison of tier 1 to {_nearest} for 2.5 seconds
+                
+                set metadata "inAir" of {_fish} to false
+                execute console command "/data merge entity %UUID of {_fish}% {Motion:[]}"
+                    
+        if all:
+            {_fish} is on ground
+            metadata "inAir" of {_fish} is true
+        then:
+            set metadata "inAir" of {_fish} to false
+
+        if metadata "inAir" of {_fish} is false:
+            execute console command "/execute as %UUID of {_fish}% at @s run tp @n[type=area_effect_cloud,tag=codPuddle] @s"
+        
+            if {_fish} is a cod:
+                set {effects} to {@codEffects}
+            else if {_fish} is a salmon:
+                set {effects} to {@salmonEffects}
+            else if {_fish} is a tropical fish:
+                set {effects} to {@tropicalEffects}
+            else if {_fish} is a pufferfish:
+                set {effects} to {@pufferEffects}
+            execute console command "/execute at %UUID of {_fish}% unless entity @n[type=area_effect_cloud,distance=..1] run summon area_effect_cloud ~ ~ ~ {custom_particle:{type:""splash""},Radius:{@radius},Duration:999999,Tags:[""codPuddle""],potion_contents:{custom_effects:[%{effects}%]}}"
+
+            if distance between {_summoner} and {_fish} is less than {@radius} + 1:
+                remove slowness from {_summoner}
+                remove weakness from {_summoner}
+                remove mining fatigue from {_summoner}
+                remove blindness from {_summoner}
+                remove poison from {_summoner}
+                if {_summoner} does not have potion effect regeneration:
+                    apply regeneration without any particles whilst hiding the potion icon to {_summoner} for 3 seconds
+            remove poison from {_fish}
+                
+        if {_fish} is in water:
+            set metadata "inAir" of {_fish} to true
+            execute console command "/execute at %UUID of {_fish}% run kill @n[type=area_effect_cloud,tag=codPuddle]"
+            
+  
+on death of cod or salmon or tropical fish or pufferfish:
+    if metadata "inAir" of victim is false:
+        execute console command "/execute at %UUID of victim% run kill @n[type=area_effect_cloud,tag=codPuddle]"
+
+on damage of cod or salmon or tropical fish or pufferfish:
+    if damage cause is fall:
+        cancel event
+    else if metadata "summoner" of victim is set:
+        set name of victim to "%name of metadata "summoner" of victim%'s Fish (%max(0,ceil((health of victim - damage) * 2))%❤)"

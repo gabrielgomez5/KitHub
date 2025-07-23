@@ -1,0 +1,74 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 9,
+  "name": "gratfunny",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1397403925661093959/image.jpg?ex\u003d68819952\u0026is\u003d688047d2\u0026hm\u003ddafec51cf652c31b51a22cd673ebd4f0bd844f57c474eebff3eb349f61b1cd45\u0026",
+  "width": 3,
+  "height": 4,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753237531497,
+  "mapdata": [
+    {
+      "mapid": 145,
+      "image": "0.png",
+      "markers": []
+    },
+    {
+      "mapid": 146,
+      "image": "1.png",
+      "markers": []
+    },
+    {
+      "mapid": 147,
+      "image": "2.png",
+      "markers": []
+    },
+    {
+      "mapid": 148,
+      "image": "3.png",
+      "markers": []
+    },
+    {
+      "mapid": 149,
+      "image": "4.png",
+      "markers": []
+    },
+    {
+      "mapid": 150,
+      "image": "5.png",
+      "markers": []
+    },
+    {
+      "mapid": 151,
+      "image": "6.png",
+      "markers": []
+    },
+    {
+      "mapid": 152,
+      "image": "7.png",
+      "markers": []
+    },
+    {
+      "mapid": 153,
+      "image": "8.png",
+      "markers": []
+    },
+    {
+      "mapid": 154,
+      "image": "9.png",
+      "markers": []
+    },
+    {
+      "mapid": 155,
+      "image": "10.png",
+      "markers": []
+    },
+    {
+      "mapid": 156,
+      "image": "11.png",
+      "markers": []
+    }
+  ]
+}

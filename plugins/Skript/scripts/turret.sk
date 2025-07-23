@@ -1,0 +1,93 @@
+options:
+    turretSpawn: skeleton spawn egg named "§rTurret Spawn Egg" with lore "§bRight Click to Place Turret"
+
+command /turret:
+    permission: op
+    trigger:
+        give 1 of {@turretSpawn} to player
+
+on damage of armor stand:
+    if metadata "turret" of victim is true:
+        cancel event
+        set {_turret} to victim
+        set {_health} to metadata "health" of {_turret}
+        set {_health} to {_health} - damage
+        set metadata "health" of {_turret} to {_health}
+        set {_summoner} to metadata "summoner" of {_turret}
+        set name of {_turret} to "&6%name of {_summoner}%'s Turret &4(%ceil({_health} * 2)%❤)"
+        if {_health} <= 0:
+            delete metadata "summoner" of {_turret}
+            delete metadata "target" of {_turret}
+            set {_loc} to location of {_turret}
+            create a fake explosion at {_loc}
+            kill {_turret}
+
+on right click:
+    if name of player's tool is not name of {@turretSpawn}:
+        exit
+    if target block is oak button or spruce button or birch button or jungle button or acacia button or dark oak button or mangrove button or cherry button or pale oak button or bamboo button or crimson button or warped button or stone button or polished blackstone button or oak door or spruce door or birch door or jungle door or acacia door or dark oak door or mangrove door or cherry door or pale oak door or bamboo door or crimson door or warped door or jungle door or exposed copper door or weathered copper door or oxidized copper door or waxed copper door or waxed exposed copper door or waxed weathered copper door or waxed oxidized copper door or oak trapdoor or spruce trapdoor or birch trapdoor or jungle trapdoor or acacia trapdoor or dark oak trapdoor or mangrove trapdoor or cherry trapdoor or pale oak trapdoor or bamboo trapdoor or crimson trapdoor or warped trapdoor or jungle trapdoor or exposed copper trapdoor or weathered copper trapdoor or oxidized copper trapdoor or waxed copper trapdoor or waxed exposed copper trapdoor or waxed weathered copper trapdoor or waxed oxidized copper trapdoor or oak fence gate or spruce fence gate or birch fence gate or jungle fence gate or acacia fence gate or dark oak fence gate or mangrove fence gate or cherry fence gate or pale oak fence gate or bamboo fence gate or crimson fence gate or warped fence gate or jungle fence gate:
+        exit
+    if all:
+        {ingame} is false
+        gamemode of player is adventure
+    then:
+        exit
+    if item cooldown of player's tool for player > 0 seconds:
+        send action bar "&cYou are on cooldown! %cooldown of player's tool for player% left" to player
+        exit
+
+    cancel event
+    set {_loc} to location of target block of player
+    if distance between {_loc} and player is less than 30:
+        remove 1 {@turretSpawn} from player
+        add 1 to y-coordinate of {_loc}
+        spawn armor stand at {_loc}
+        set {_turret} to last spawned entity
+        equip {_turret} with iron chestplate
+        equip {_turret} with iron leggings
+        equip {_turret} with iron boots
+        set metadata "turret" of {_turret} to true
+        set metadata "summoner" of {_turret} to player
+        set metadata "health" of {_turret} to 10
+        set metadata "cooldown" of {_turret} to 0
+        set name of {_turret} to "&6%name of player%'s Turret &4(20❤)"
+        show custom name of {_turret}
+        play sound "block.anvil.place" from {_turret}
+
+every tick:
+    loop all armor stands:
+        if metadata "turret" of loop-entity is true:
+            set {_turret} to loop-entity
+            set {_nearest} to nearest player to {_turret}
+            
+            if distance between {_turret} and {_nearest} is less than 30:
+                if all:
+                    {_nearest} is not metadata "summoner" of {_turret}
+                    {_nearest} is not metadata "target" of {_turret}
+                    gamemode of {_nearest} is not spectator
+                then:
+                    set metadata "target" of {_turret} to {_nearest}  
+
+            set {_target} to metadata "target" of {_turret}
+            
+            if any:
+                {_target} is dead
+                {_target} is not a living entity
+                {_turret} does not have direct line of sight to {_target}
+                distance between {_turret} and {_target} is greater than 30
+            then:
+                delete metadata "target" of {_turret}
+            
+            if {_target} is set:
+                subtract 1 from metadata "cooldown" of {_turret}
+                set {_from} to location of {_turret}
+                set {_to} to location of {_target}
+                set {_dx} to x-coordinate of {_to} - x-coordinate of {_from}
+                set {_dy} to y-coordinate of {_to} - y-coordinate of {_from}
+                set {_dz} to z-coordinate of {_to} - z-coordinate of {_from}
+                set yaw of {_turret} to 360 - atan2({_dz}, {_dx})
+                set pitch of {_turret} to 85 - atan2(0 - {_dy}, sqrt({_dx} * {_dx} + {_dz} * {_dz}))
+                if metadata "cooldown" of {_turret} is less than 0:
+                    set metadata "cooldown" of {_turret} to 20
+                    play sound "entity.arrow.shoot" with volume 2.0 from {_turret}
+                    shoot arrow from {_turret} at speed 2

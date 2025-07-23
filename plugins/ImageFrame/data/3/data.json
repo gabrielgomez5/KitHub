@@ -1,0 +1,24 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 3,
+  "name": "bigduck1",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1397393874841764020/2560px-Big_Duck_2018_05.png?ex\u003d68818ff6\u0026is\u003d68803e76\u0026hm\u003df25f882db5a195742ff639b65c55ca056b21b1d97f64447f18f675f88176d09a\u0026",
+  "width": 2,
+  "height": 1,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753235100795,
+  "mapdata": [
+    {
+      "mapid": 131,
+      "image": "0.png",
+      "markers": []
+    },
+    {
+      "mapid": 132,
+      "image": "1.png",
+      "markers": []
+    }
+  ]
+}

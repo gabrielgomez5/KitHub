@@ -1,0 +1,39 @@
+options:
+    chimera1: item named "§rChimera Sword"
+
+
+
+on right click:
+    if target block is oak button or spruce button or birch button or jungle button or acacia button or dark oak button or mangrove button or cherry button or pale oak button or bamboo button or crimson button or warped button or stone button or polished blackstone button or oak door or spruce door or birch door or jungle door or acacia door or dark oak door or mangrove door or cherry door or pale oak door or bamboo door or crimson door or warped door or jungle door or exposed copper door or weathered copper door or oxidized copper door or waxed copper door or waxed exposed copper door or waxed weathered copper door or waxed oxidized copper door or oak trapdoor or spruce trapdoor or birch trapdoor or jungle trapdoor or acacia trapdoor or dark oak trapdoor or mangrove trapdoor or cherry trapdoor or pale oak trapdoor or bamboo trapdoor or crimson trapdoor or warped trapdoor or jungle trapdoor or exposed copper trapdoor or weathered copper trapdoor or oxidized copper trapdoor or waxed copper trapdoor or waxed exposed copper trapdoor or waxed weathered copper trapdoor or waxed oxidized copper trapdoor or oak fence gate or spruce fence gate or birch fence gate or jungle fence gate or acacia fence gate or dark oak fence gate or mangrove fence gate or cherry fence gate or pale oak fence gate or bamboo fence gate or crimson fence gate or warped fence gate or jungle fence gate:
+        exit
+    if all:
+        {ingame} is false
+        gamemode of player is adventure
+    then:
+        exit
+    if item cooldown of player's tool for player > 0 seconds:
+        send action bar "&cYou are on cooldown! %cooldown of player's tool for player% left" to player
+        exit
+    
+    if player's tool is {@chimera1}:
+        set item cooldown of {@chimera1} for player to 8 seconds
+        set {_chimeraMutation} to a random integer between 1 and 8
+        set player's level to 10
+        if {_chimeraMutation} is 1:
+            execute console command "/setblock 1001 -32 1006 redstone_block"
+        else if {_chimeraMutation} is 2:
+            execute console command "/setblock 1001 -32 1005 redstone_block"
+        else if {_chimeraMutation} is 3:
+            execute console command "/setblock 1000 -32 1006 redstone_block"
+        else if {_chimeraMutation} is 4:
+            execute console command "/setblock 1000 -32 1005 redstone_block"
+        else if {_chimeraMutation} is 5:
+            execute console command "/setblock 999 -32 1006 redstone_block"
+        else if {_chimeraMutation} is 6:
+            execute console command "/setblock 999 -32 1005 redstone_block"
+        else if {_chimeraMutation} is 7:
+            execute console command "/setblock 998 -32 1006 redstone_block"
+        else if {_chimeraMutation} is 8:
+            execute console command "/setblock 998 -32 1005 redstone_block"
+        wait 2 ticks
+        set player's level to 0

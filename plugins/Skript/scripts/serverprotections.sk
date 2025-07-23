@@ -1,0 +1,41 @@
+using damage sources
+
+on player dropping:
+    if gamemode of player is adventure:
+        cancel event
+
+on rightclick:
+    set {_blacklist::blocks::*} to repeater, comparator, crafting table, stonecutter, cartography table, fletching table, flower pot, smithing table, grindstone, loom, furnace, smoker, blast furnace, anvil, chipped anvil, damaged anvil, composter, note block, jukebox, enchanting table, brewing stand, cauldron, beacon, lodestone, flower pot, item frame, glow item frame, beehive, suspicious sand, suspicious gravel, decorated pot,  dispenser, dropper, chest, barrel, ender chest, respawn anchor, end portal frame, vault, chiseled bookshelf, white bed, light gray bed, gray bed, black bed, brown bed, red bed, orange bed, yellow bed, lime bed, green bed, cyan bed, light blue bed, blue bed, purple bed, magenta bed, and pink bed
+    if all:
+        gamemode of player is adventure
+        {_blacklist::blocks::*} contains target block
+    then:
+        cancel event
+
+on block ignite:
+    if all:
+        {ingame} is true
+        event-block is campfire
+    then:
+        cancel event
+
+on player join:
+    if any:
+        {ingame} is true
+        {gamestarting} is true
+    then:
+        teleport player to location at 1004, 3, 1002
+
+every 1 second:
+    loop all players:
+        set {_player} to loop-entity
+        if all:
+            y-coordinate of {_player}'s position < -70
+            gamemode of {_player} is adventure
+        then:
+            if last attacker of {_player} is set:
+                set {_source} to a custom damage source:
+                    set the damage type to player attack
+                    set the causing entity to last attacker of {_player}
+                    set the direct entity to last attacker of {_player}
+                damage {_player} by 100 hearts using {_source}

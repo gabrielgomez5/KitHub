@@ -1,0 +1,76 @@
+options:
+    miner: unbreakable iron shovel named "§rMining Shovel" with lore "§r§bRight Click to Dig Underground" with item flags hide unbreakable and hide attributes
+
+command /miner:
+    permission: op
+    trigger:
+        give player 1 of {@miner}
+
+command /mine <boolean>:
+    permission: op
+    trigger:
+        set metadata "mining" of player to arg-1
+
+on right click:
+    if target block is oak button or spruce button or birch button or jungle button or acacia button or dark oak button or mangrove button or cherry button or pale oak button or bamboo button or crimson button or warped button or stone button or polished blackstone button or oak door or spruce door or birch door or jungle door or acacia door or dark oak door or mangrove door or cherry door or pale oak door or bamboo door or crimson door or warped door or jungle door or exposed copper door or weathered copper door or oxidized copper door or waxed copper door or waxed exposed copper door or waxed weathered copper door or waxed oxidized copper door or oak trapdoor or spruce trapdoor or birch trapdoor or jungle trapdoor or acacia trapdoor or dark oak trapdoor or mangrove trapdoor or cherry trapdoor or pale oak trapdoor or bamboo trapdoor or crimson trapdoor or warped trapdoor or jungle trapdoor or exposed copper trapdoor or weathered copper trapdoor or oxidized copper trapdoor or waxed copper trapdoor or waxed exposed copper trapdoor or waxed weathered copper trapdoor or waxed oxidized copper trapdoor or oak fence gate or spruce fence gate or birch fence gate or jungle fence gate or acacia fence gate or dark oak fence gate or mangrove fence gate or cherry fence gate or pale oak fence gate or bamboo fence gate or crimson fence gate or warped fence gate or jungle fence gate:
+        exit
+    if item cooldown of player's tool for player > 0 seconds:
+        send action bar "&cYou are on cooldown! %cooldown of player's tool for player% left" to player
+        exit
+    if all:
+        {ingame} is false
+        gamemode of player is adventure
+    then:
+        cancel event
+        exit
+
+    if player's tool is not {@miner}:
+        exit
+
+    #set item cooldown of {@miner} for player to 15 seconds
+
+    set {_scale::%player%} to scale attribute of player
+    set {_gravity::%player%} to gravity attribute of player
+    
+    execute console command "/execute as %UUID of player% at @s run summon armor_stand ~ ~ ~ {Invulnerable:1b,Tags:[""miner""]}"
+    set {_miner} to nearest armor stand to player
+    
+    set metadata "summoner" of {_miner} to player
+    #set scale attribute of {_miner} to 0.0001
+    set gravity attribute of {_miner} to 1000
+    
+    set metadata "mining" of {_miner} to true
+    
+    wait 5 seconds
+    kill {_miner}
+
+every tick:
+    loop all armor stands:
+        set {_miner} to loop-entity
+        if metadata "mining" of {_miner} is true:
+            set {_next} to block in front of {_miner}
+            set {_player} to metadata "summoner" of {_miner}
+            set yaw of {_miner} to yaw of {_player}
+            
+            if {_next} is not air:
+                execute console command "/execute as %UUID of {_miner}% at @s run tp ^ ^ ^0.15"
+                if block at {_miner}'s location is not air:
+                    teleport {_miner} to location above {_miner}
+            else:
+                push {_miner} forward at speed 0.15
+            execute console command "/execute as %UUID of {_miner}% at @s run tp %UUID of {_player}% ~ ~3 ~"
+          
+
+every 0.5 seconds:
+    loop all armor stands:
+        set {_miner} to loop-entity
+        if metadata "mining" of {_miner} is true:
+            spawn evoker fangs at location of {_miner}
+            set metadata "summoner" of last spawned evoker fangs to metadata "summoner" of {_miner}
+
+on damage of player:
+    if all:
+        attacker is evoker fangs
+        victim is metadata "summoner" of attacker
+    then:
+        cancel event

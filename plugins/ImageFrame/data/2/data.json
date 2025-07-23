@@ -1,0 +1,89 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 2,
+  "name": "planets",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1390520630889283727/solar-system.jpg?ex\u003d6880f281\u0026is\u003d687fa101\u0026hm\u003d540c73844fc1a3c7e1133fb84e0ad2b7e6257ee45e66c3407846cc1280c0c800\u0026",
+  "width": 5,
+  "height": 3,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753234727298,
+  "mapdata": [
+    {
+      "mapid": 112,
+      "image": "0.png",
+      "markers": []
+    },
+    {
+      "mapid": 113,
+      "image": "1.png",
+      "markers": []
+    },
+    {
+      "mapid": 114,
+      "image": "2.png",
+      "markers": []
+    },
+    {
+      "mapid": 115,
+      "image": "3.png",
+      "markers": []
+    },
+    {
+      "mapid": 116,
+      "image": "4.png",
+      "markers": []
+    },
+    {
+      "mapid": 117,
+      "image": "5.png",
+      "markers": []
+    },
+    {
+      "mapid": 118,
+      "image": "6.png",
+      "markers": []
+    },
+    {
+      "mapid": 119,
+      "image": "7.png",
+      "markers": []
+    },
+    {
+      "mapid": 120,
+      "image": "8.png",
+      "markers": []
+    },
+    {
+      "mapid": 121,
+      "image": "9.png",
+      "markers": []
+    },
+    {
+      "mapid": 122,
+      "image": "10.png",
+      "markers": []
+    },
+    {
+      "mapid": 123,
+      "image": "11.png",
+      "markers": []
+    },
+    {
+      "mapid": 124,
+      "image": "12.png",
+      "markers": []
+    },
+    {
+      "mapid": 125,
+      "image": "13.png",
+      "markers": []
+    },
+    {
+      "mapid": 126,
+      "image": "14.png",
+      "markers": []
+    }
+  ]
+}

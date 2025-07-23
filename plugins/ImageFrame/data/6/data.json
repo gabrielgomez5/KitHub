@@ -1,0 +1,19 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 6,
+  "name": "duckog",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1397396499322900520/The_Big_Duck_1930s_postcard.png?ex\u003d68819267\u0026is\u003d688040e7\u0026hm\u003d5eaad02553d9455f67295e664e4f2c41f1ce65dd9214b6db714e2305689c96bd\u0026",
+  "width": 1,
+  "height": 1,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753235993145,
+  "mapdata": [
+    {
+      "mapid": 142,
+      "image": "0.png",
+      "markers": []
+    }
+  ]
+}

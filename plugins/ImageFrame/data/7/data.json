@@ -1,0 +1,19 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 7,
+  "name": "duckmove",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1397396427604230174/Screen_Shot_2025-07-22_at_9.54.22_PM.png?ex\u003d68819256\u0026is\u003d688040d6\u0026hm\u003da65cc62a870999fc442a265d04657a0b57cc334da76e6a1b8bbd28cae78ad3a9\u0026",
+  "width": 1,
+  "height": 1,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753236049744,
+  "mapdata": [
+    {
+      "mapid": 143,
+      "image": "0.png",
+      "markers": []
+    }
+  ]
+}

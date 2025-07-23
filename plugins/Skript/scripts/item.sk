@@ -1,0 +1,614 @@
+options:
+    kitSelect: written book
+    mage1: stick named "§rWand"
+    assassin1: unbreakable iron boots named "§rAsssassin Boots"
+    placeholder1: stick named "Special Rika Placeholder Item"
+    dasher1: unbreakable iron sword named "§eDashing Sword"
+    phantom1: firework star named "§rGhost Orb"
+    astronaut1: lime dye named "§rLaunch"
+    spectre1: light gray dye named "§rRising Spirit"
+    spectre2: unbreakable iron hoe named "§rScythe"
+    psychic1: amethyst shard named "§r§dPsychic Crystal"
+    cavalry1: horse spawn egg named "§rSummon Horse"
+    vampire1: unbreakable wooden sword named "§rVampire Sword"
+    boxer1: red wool named "§rBoxing Glove"
+    thief1: item named "§rSteal"
+    necromancer1: unbreakable iron shovel named "§rSummon Undead"
+    gambler1: gold nugget named "§rCoin"
+    reaper1: unbreakable stone sword named "§rReaper Sword"
+    reaper2: unbreakable netherite helmet named "§rReaper Helmet"
+    poisoner1: unbreakable wooden sword named "§rPoisoner Sword"
+    breeze1: unbreakable iron sword named "§rWind Blade"
+    magma1: fire charge named "§rEruption"
+    spider1: unbreakable netherite helmet named "§rSpider Helmet"
+    pilot1: unbreakable iron sword named "§rPilot's Sword" with lore "§r§c4 Attack Damage", "§r§aNormal Attack Speed", and "§r§bRight Click to Get Elytra" with item flags hide unbreakable and hide attributes
+    pilot2: white
+    magician1: item named "§rMagic Sword"
+    archer1: unbreakable bow named "§rArcher's Bow"
+    shulker1: iron horse armor named "§rShulker Gun"
+    gun1: iron horse armor named "§rGun"
+    assassin2: item named "§eAssassin Sword"
+    blitz1: unbreakable stone sword named "§rBlitz Sword"
+    quake1: unbreakable mace named "§r§fQuaking Mace"
+    heartstealer1: unbreakable netherite sword named "§rDarkheart"
+    bomber: tnt named "§rBomb"
+
+    powerup1: item named "§rKatana"
+    lightningArm: breeze rod named "§rLightning Arm"
+    fireArm: blaze rod named "§rFire Arm"
+    fireball: fire charge named "§rFireball"
+    airStrike: disc fragment 5 named "§r§fAir Strike" with lore "§r§bRight Click to Call Air Strike" and "§r§5Power-Up"
+    morphCat: cat spawn egg named "§rCat Morph" with lore "§r§bRight Click to Morph into a Cat" and "§r§5Power-Up"
+    morphBlock: chorus plant named "§rBlock Morph" with lore "§r§bRight Click to Morph into Target Block" and "§r§bSneak to Align Block" and "§r§5Power-Up"
+    jetpack: firework rocket named "§rBroken Jetpack" with lore "§r§bRight Click to Fly Uncontrollably" and "§r§5Power-Up" with item flag hide additional tooltip
+    squidSquad: squid spawn egg named "§r§4The Doom of Cactus Island"
+    squidSword: diamond sword named "§rSquidslayer Sword"
+
+    dev1: diamond horse armor named "§rRika Railgun"
+    dev2: item named "§rRika Railgun 2"
+
+command /unmorph [<player>]:
+    trigger:
+        if arg-1 is not set:
+            unmorphPlayer(player)
+        else:
+            unmorphPlayer(arg-1)
+
+command /giveitem <text>:
+    permission: op
+    trigger:
+        if arg-1 is "pilot":
+            give player {@pilot1}
+        if arg-1 is "mage1":
+            give player 1 of {@mage1}
+        if arg-1 is "assassin1":
+            give player 1 of {@assassin1}
+        if arg-1 is "psychic1":
+            give player 1 of {@psychic1}
+        if arg-1 is "spectre2":
+            give player 1 of {@spectre2}
+        if arg-1 is "dev1":
+            give player 1 of {@dev1}
+        if arg-1 is "archer1":
+            give player 1 of {@archer1}
+        if arg-1 is "kitselect":
+            give player 1 of {@kitSelect}
+        if arg-1 is "airstrike":
+            give player 64 of {@airStrike}
+        if arg-1 is "morphCat":
+            give player 64 of {@morphCat}
+        if arg-1 is "morphBlock":
+            give player 64 of {@morphBlock}
+        if arg-1 is "jetpack":
+            give player 64 of {@jetpack}
+        if arg-1 is "squidSquad":
+            give player 64 of {@squidSquad}
+        if arg-1 is "squidSword":
+            give player 1 of {@squidSword}
+        if arg-1 is "bomber":
+            give player 5 of {@bomber}
+
+command /clearstacks:
+    permission: op
+    trigger:
+        loop all players:
+            delete {magicianStack::%loop-player%}
+            delete {gunStacks::%loop-player%}
+            delete {heartstealerStacks::%loop-player%}
+
+
+command /run <player> <text>:
+    permission: op
+    trigger:
+        execute arg-1 command "arg-2"
+
+command /checkGame:
+    trigger:
+        send {inGame} to player
+
+command /rename:
+    trigger:
+        set name of player's tool to "§r§fQuaking Mace"
+
+local function morphPlayer(user: player, silent: boolean):
+    if {_silent} is false:
+        execute console command "/execute at %UUID of {_user}% run playsound minecraft:entity.warden.sonic_boom player @a ~ ~ ~"
+    set metadata "morphed" of {_user} to true
+    
+    set {scale::%{_user}%} to {_user}'s scale attribute
+    set {head::%{_user}%} to {_user}'s helmet
+    set {chest::%{_user}%} to {_user}'s chestplate slot
+    set {legs::%{_user}%} to {_user}'s legs
+    set {feet::%{_user}%} to {_user}'s shoes
+    
+    remove {head::%{_user}%} from {_user}
+    remove {chest::%{_user}%} from {_user}
+    remove {legs::%{_user}%} from {_user}
+    remove {feet::%{_user}%} from {_user}
+
+    set {_user}'s scale attribute to 0.5
+    make {_user} invisible
+
+local function unmorphPlayer(user: player):
+    make {_user} visible
+    set metadata "morphed" of {_user} to false
+    set {_user}'s scale attribute to {scale::%{_user}%}
+    equip {_user} with {head::%{_user}%}
+    equip {_user} with {chest::%{_user}%}
+    equip {_user} with {legs::%{_user}%}
+    equip {_user} with {feet::%{_user}%}
+    execute console command "/execute at %UUID of {_user}% run playsound minecraft:entity.warden.death player @a ~ ~ ~"
+    loop all block displays and cats:
+        if metadata "summoner" of loop-entity is player:
+            kill loop-entity
+
+every 1 second:
+    loop all players:
+        
+        if loop-player's tool is {@spectre1}:
+            apply levitation 2 to loop-player for 1 seconds
+            apply wither 2 to loop-player for 1 second
+        if loop-player's tool is {@spectre2}:
+            apply potion of invisibility 1 without particles to loop-player for 1 hour
+        
+        if loop-player's tool is {@boxer1}:
+            if the health of loop-player is smaller than 3:
+                apply potion of strength 4 to loop-player for 1 seconds
+            else if the health of loop-player is smaller than 5:
+                apply potion of strength 2 to loop-player for 1 seconds
+            else if the health of loop-player is smaller than 8:
+                apply potion of strength 1 to loop-player for 1 seconds
+            if the health of loop-player is larger than 18:
+                remove strength from loop-players
+
+every tick:
+    if {squidActive} is true:
+        set {beatWait} to difference between now and {lastBeat}
+    if {beatWait} >= 2.4 seconds:
+        set {lastBeat} to now
+        squidTurn()
+
+    loop all cats:
+        set {_cat} to loop-entity
+        if metadata "summoner" of {_cat} is set:
+            teleport {_cat} to metadata "summoner" of {_cat}
+            
+    loop all block displays:
+        set {_block} to loop-entity
+        set {_player} to metadata "summoner" of {_block}
+        if {_player} is set:
+            if {_player} is sneaking:
+                set {_xCoord} to floor(x-coordinate of {_player}'s location)
+                set {_yCoord} to floor(y-coordinate of {_player}'s location)
+                set {_zCoord} to floor(z-coordinate of {_player}'s location)
+                execute console command "/tp %UUID of {_block}% %{_xCoord} + 0.01% %{_yCoord}% %{_zCoord} + 0.01% 0 0"
+            else:
+                execute console command "/execute at %UUID of {_player}% run tp %UUID of {_block}% ~-0.5 ~ ~-0.5 0 0"
+
+    loop all squids and glow squids:
+        execute console command "/execute as %UUID of loop-entity% run data merge entity @s {fall_distance:0f,Air:100,Team:""noCol""}"
+    
+    loop all players:
+        set {_player} to loop-entity
+        if metadata "fly" of {_player} is true:
+            show flame behind {_player}
+            show smoke behind {_player}
+            push {_player} forward at speed 0.2
+
+on damage:
+    if attacker's tool is {@gun1}:
+        wait 1 tick
+        remove levitation from victim
+        #heal victim by 0.75 heart
+        set victim's invulnerability time to 0 ticks
+    if attacker's tool is {@vampire1}:
+        heal attacker by 0.5 hearts
+    if attacker's tool is {@reaper1}:
+        heal attacker by 2 hearts
+    if attacker's helmet is {@reaper2}:
+        damage attacker by 2 hearts
+    if attacker's tool is {@poisoner1}:
+        apply potion of poison 1 to victim for 5 seconds
+    if attacker's helmet is {@spider1}:
+        if attacker's tool is not air:
+            if attacker's tool is not unbreakable stone sword:
+                apply potion of slowness 3 to victim for 5 seconds
+    if attacker's tool is {@blitz1}:
+        set victim's invulnerability time to 0 ticks
+    if attacker's tool is {@archer1}:
+        wait 1 tick
+        set victim's invulnerability time to 0 ticks
+    if name of attacker's tool is name of {@squidSword}:
+        if attack cooldown of attacker < 1:
+            exit
+        spawn lightning bolt at location of victim
+        set metadata "summoner" of last spawned lightning bolt to attacker
+    if attacker's tool is {@heartstealer1}:
+        add 1 to {heartstealerStacks::%victim%}
+
+
+on damage of player:
+    if metadata "morphed" of victim is true:
+        unmorphPlayer(victim)
+        remove weakness from victim
+        remove speed from victim
+    if all:
+        attacker is lightning bolt
+        metadata "summoner" of attacker is victim
+    then:
+        cancel event
+
+on death of player:
+    victim is a player
+    attacker is a player
+    if attacker's boots is {@assassin1}:
+        apply strength to attacker for 3 seconds
+    if attacker's tool is {@quake1}:
+        give 3 wind_charge to attacker
+    set cooldown of all items for victim to 0 seconds
+
+on death of squid:
+    if metadata "superiorSquid" of victim is true:
+        kill all squids and glow squids
+        set {squidActive} to false
+        execute console command "/playsound minecraft:entity.ender_dragon.death hostile @a 0 0 0 1000 1 1"
+        execute console command "/weather clear 999999d"
+        execute console command "/setblock -4953 88 6028 air"
+        execute console command "/bossbar set minecraft:squid visible false"
+        execute console command "/setblock -4955 88 6031 redstone_block"
+        execute console command "/setblock -4955 88 6031 air"
+        execute console command "/stopsound @a music minecraft:music_disc.tears"
+        delete {squid}
+on damage of squid:
+    if metadata "superiorSquid" of victim is true:
+        set {regenTimer} to now
+
+local function squidTurn():
+    loop 15 times:
+        set {_pos} to position of {squid}
+        set {_angle} to a random number between 0 and 360
+        set {_distance} to a random number between 20 and 40
+        add cos({_angle}) * {_distance} to x-coordinate of {_pos}
+        add sin({_angle}) * {_distance} to z-coordinate of {_pos}
+        execute console command "/summon lightning_bolt %x-coordinate of {_pos}% 90 %z-coordinate of {_pos}%"
+
+    if {squid} is not set:
+        exit
+    
+    make all squids and glow squids invulnerable
+    loop all squids and glow squids:
+        if metadata "superiorSquid" of loop-entity is true:
+            set {_time} to difference between {regenTimer} and now
+            if {squid} is not alive:
+                set {squid} to loop-entity
+            if {_time} >= 10 seconds:
+                heal loop-entity by 5 hearts
+            create safe explosion of force 4 at loop-entity
+        else:
+            if loop-entity is squid:
+                create safe explosion of force 2 at loop-entity
+            else:
+                create safe explosion of force 3 at loop-entity
+    make all squids and glow squids not invulnerable
+
+    wait 2 ticks
+    loop all players:
+        if all:
+            gamemode of loop-entity is adventure
+            distance between {squid} and loop-entity < 500
+        then:
+            execute console command "/execute as @e[type=squid,tag=superiorSquid] at @s facing entity %UUID of loop-entity% eyes run tp @s ~ ~ ~ ~ ~"
+            set {_killSquid} to random entity out of all squids
+            if number of squids and glow squids >= 20:
+                while metadata "superiorSquid" of {_killSquid} is true:
+                    set {_killSquid} to random entity out of all squids and glow squids
+                kill {_killSquid}
+            set {_speed} to max(10,distance between {squid} and loop-entity)
+            if health of {squid} <= 50:
+                shoot glow squid from {squid} with speed {_speed}
+                set scale attribute of last shot glow squid to random number between 1 and 2
+                set max health attribute of last shot glow squid to 10
+                set explosion knockback resistance attribute of last shot glow squid to 0.2
+                heal last shot glow squid by 10 hearts
+            else:
+                shoot squid from {squid} with speed {_speed}
+                set scale attribute of last shot squid to random number between 0.5 and 1.5
+                set max health attribute of last shot squid to 5
+                set explosion knockback resistance attribute of last shot squid to 0.2
+            set metadata "superiorSquid" of last shot squid to false
+
+on sneak toggle:
+    if player's tool is {@cavalry1}:
+        spawn horse at player
+        make player execute command "/clear @s horse_spawn_egg"
+        tame the nearest horse relative to player
+
+on explode:
+    if entity has metadata value "mageFireball":
+        set {_fireballLocation} to location of last spawned fireball
+        cancel event
+        create a safe explosion of force 2 at {_fireballLocation}
+    if entity is tnt:
+        cancel event
+        create a safe explosion of force 3 at location of entity
+
+on right click:
+    if target block is oak button or spruce button or birch button or jungle button or acacia button or dark oak button or mangrove button or cherry button or pale oak button or bamboo button or crimson button or warped button or stone button or polished blackstone button or oak door or spruce door or birch door or jungle door or acacia door or dark oak door or mangrove door or cherry door or pale oak door or bamboo door or crimson door or warped door or jungle door or exposed copper door or weathered copper door or oxidized copper door or waxed copper door or waxed exposed copper door or waxed weathered copper door or waxed oxidized copper door or oak trapdoor or spruce trapdoor or birch trapdoor or jungle trapdoor or acacia trapdoor or dark oak trapdoor or mangrove trapdoor or cherry trapdoor or pale oak trapdoor or bamboo trapdoor or crimson trapdoor or warped trapdoor or jungle trapdoor or exposed copper trapdoor or weathered copper trapdoor or oxidized copper trapdoor or waxed copper trapdoor or waxed exposed copper trapdoor or waxed weathered copper trapdoor or waxed oxidized copper trapdoor or oak fence gate or spruce fence gate or birch fence gate or jungle fence gate or acacia fence gate or dark oak fence gate or mangrove fence gate or cherry fence gate or pale oak fence gate or bamboo fence gate or crimson fence gate or warped fence gate or jungle fence gate:
+        exit
+    if item cooldown of player's tool for player > 0 seconds:
+        send action bar "&cYou are on cooldown! %cooldown of player's tool for player% left" to player
+        exit
+    if all:
+        {ingame} is false
+        player's tool is not {@kitSelect}
+        gamemode of player is adventure
+    then:
+        cancel event
+        exit
+
+    if player's tool is {@dasher1}:
+        set item cooldown of {@dasher1} for player to 5 seconds
+        push player forwards at speed 1
+            
+    if player's tool is {@powerup1}:
+        set item cooldown of {@powerup1} for player to 8 seconds
+        push player forwards at speed 1
+  
+    if player's tool is {@phantom1}:
+        set item cooldown of {@phantom1} for player to 20 seconds
+        apply potion of invisibility 1 without particles to player for 8 seconds
+        apply potion of speed 1 without particles to player for 8 seconds
+        apply potion of weakness 3 without particles to player for 7 seconds
+            
+    if player's tool is {@astronaut1}:
+        set item cooldown of player's tool for player to 15 seconds
+        push player up at speed 1.3
+       
+    if player's tool is {@psychic1}:
+        if all:
+            gamemode of the nearest player relative to player is adventure
+            distance between the player and the nearest player relative to player is smaller than 15
+        then:
+            teleport the nearest player relative to player to player
+            set item cooldown of player's tool for player to 15 seconds
+            
+    if player's tool is {@mage1}:
+        set item cooldown of player's tool for player to 5 seconds
+        spawn fireball above the player
+        set metadata value "mageFireball" of last spawned fireball to true
+            
+    if player's tool is {@breeze1}:
+        set item cooldown of player's tool for player to 6 seconds
+        spawn wind charge at player
+        set metadata value "breezeCharge" of last spawned wind charge to true
+    
+    if player's tool is {@necromancer1}:
+        set item cooldown of player's tool for player to 7 seconds
+        spawn zombie above the target block of player
+        apply infinite potion of fire resistance without any particles to the last spawned zombie 
+
+    if name of player's tool is name of {@lightningArm}:
+        remove {@lightningArm} from player
+        spawn 2 lightning bolts above the target block of player
+
+    if name of player's tool is name of {@fireArm}:
+        remove {@fireArm} from player
+        spawn fireball above the player
+        set metadata value "mageFireball" of last spawned fireball to true
+    if name of player's tool is name of {@fireball}:
+        remove {@fireball} from player
+        spawn fireball above the player
+        set metadata value "mageFireball" of last spawned fireball to true
+
+    if name of player's tool is name of {@airStrike}:
+        remove {@airStrike} from player
+        send title "§cAirstrike Incoming" to all players
+        execute console command "/playsound minecraft:item.goat_horn.sound.5 hostile @a 0 0 0 1000 1 1"
+        loop 20 times:
+            set {_pos} to position of target block
+            set {_angle} to a random number between 0 and 360
+            set {_distance} to a random number between 0 and 30
+            add cos({_angle}) * {_distance} to x-coordinate of {_pos}
+            add sin({_angle}) * {_distance} to z-coordinate of {_pos}
+            add 100 to y-coordinate of {_pos}
+            if y-coordinate of {_pos} > 178:
+                set y-coordinate of {_pos} to 178
+            execute console command "/summon tnt %x-coordinate of {_pos}% %y-coordinate of {_pos}% %z-coordinate of {_pos}% {fuse:100}"
+            wait 0.15 seconds
+
+    if name of player's tool is name of {@morphBlock}:
+        cancel event
+        if metadata "morphed" of player is true:
+            exit
+        if event-block is not set:
+            exit
+
+        set {_data} to "%the block data of event-block%"
+        set {_bracket} to the first index of "[" in {_data} - 1
+        if {_bracket} >= 0:
+            set {_blockName} to the first {_bracket} characters of {_data}
+            set {_blockInfo} to subtext of {_data} from characters ({_bracket} + 2) to length of {_data} - 1
+            set {_properties::*} to {_blockInfo} split at ";"
+            set {_cmdProperties} to ""
+            loop {_properties::*}:
+                set {_delimeter} to first index of "=" in loop-value
+                set {_propertyName} to the first {_delimeter} - 1 characters of loop-value
+                set {_propertyValue} to subtext of loop-value from characters {_delimeter} + 1 to length of loop-value
+                set {_cmdProperties} to {_cmdProperties} + "%{_propertyName}%:""%{_propertyValue}%"","
+            set {_cmdProperties} to the first (length of {_cmdProperties} - 1) characters of {_cmdProperties}
+            execute console command "/execute at %UUID of player% run summon block_display ~ ~ ~ {block_state:{Name:""%{_blockName}%"",Properties:{%{_cmdProperties}%}}}"
+        else:
+            execute console command "/execute at %UUID of player% run summon block_display ~ ~ ~ {block_state:{Name:""%{_data}%""}}"
+
+        remove chorus plant from player
+        set metadata "summoner" of nearest block display relative to the player to player
+        morphPlayer(player, true)
+
+        wait 1 minute
+        if metadata "morphed" of player is false:
+            exit
+        unmorphPlayer(player)
+
+    if name of player's tool is name of {@morphCat}:
+        cancel event
+        if metadata "morphed" of player is true:
+            exit
+        
+        remove {@morphCat} from player
+        execute console command "/execute at %UUID of player% run summon cat ~ ~ ~ {Invulnerable:1b,Team:""noCol"",NoAI:1b,Tags:[""shapeshiftCat""]}"
+        set metadata "summoner" of nearest cat relative to the player to player
+        
+        apply speed of tier 5 without any particles to player for 10 seconds
+        apply weakness of tier 255 without any particles to player for 10 seconds
+        morphPlayer(player, false)
+
+        wait 10 seconds
+        if metadata "morphed" of player is false:
+            exit
+        unmorphPlayer(player)
+
+    if name of player's tool is name of {@jetpack}:
+        execute console command "/execute at %UUID of player% run playsound minecraft:entity.creeper.primed player @a ~ ~ ~"
+        remove {@jetpack} from player
+        wait 1 second
+        execute console command "/execute at %UUID of player% run playsound minecraft:entity.generic.explode player @a ~ ~ ~"
+        push player up at speed 3
+        set metadata "fly" of player to true
+        wait 3 seconds
+        set metadata "fly" of player to false
+
+    if name of player's tool is name of {@squidSquad}:
+        if any:
+            {squid} is alive
+            block at location -4956, 88, 6028 is redstone block
+        then:
+            exit
+
+        set {squidActive} to true
+        set {lastBeat} to now
+        remove {@squidSquad} from player
+        execute console command "/stopsound @a music"
+        execute console command "/playsound music_disc.tears music @a 0 0 0 1000 1 1"
+        execute console command "/weather rain"
+        execute console command "/setblock -4956 88 6028 redstone_block"
+        wait 192 ticks
+        
+        execute console command "/playsound minecraft:entity.ender_dragon.growl hostile @a 0 0 0 1000 1 1"
+        execute console command "/summon squid -4947 180 6046 {PersistenceRequired:1b,Team:""noCol"",Tags:[""superiorSquid""],attributes:[{id:""minecraft:max_health"",base:200},{id:""minecraft:scale"",base:8}]}"
+        execute console command "/setblock -4953 88 6028 redstone_block"
+        set {squid} to nearest squid to location -4946, 180, 6046
+        set metadata "superiorSquid" of {squid} to true
+        heal {squid} by 1000 hearts
+      
+    if player's tool is {@gambler1}:
+        set item cooldown of player's tool for player to 10 seconds
+        set {_flip} to a random integer between 1 and 4
+        if {_flip} is 1:
+            apply potion of regeneration 1 to player for 5 seconds
+            heal player by 1.5 hearts
+            execute console command "/summon area_effect_cloud 1000 -30 1000 {custom_particle:{type:""happy_villager""},Radius:2,Duration:20}"
+            teleport nearest area effect cloud relative to location(1000,-30,1000) to player
+        else if {_flip} is 2:
+            damage player by 2 hearts
+            apply potion of resistance 5 to player for 1 seconds
+            create a safe explosion of force 2 at player
+        
+        else if {_flip} is 3:
+            apply potion of strength 1 to player for 4 seconds
+            apply potion of absorption 1 to player for 4 seconds
+            execute console command "/summon area_effect_cloud 1000 -30 1000 {custom_particle:{type:""trial_spawner_detection""},Radius:1,Duration:15}"
+            teleport nearest area effect cloud relative to location(1000,-30,1000) to player
+        else:
+            execute console command "/summon area_effect_cloud 1000 -30 1000 {custom_particle:{type:""infested""},Radius:3,Duration:60,potion_contents:{custom_effects:[{id:slowness,duration:30,amplifier:4,show_particles:1b,show_icon:1}]}}"
+            teleport nearest area effect cloud relative to location(1000,-30,1000) to player
+            push player backwards at speed 1
+    
+    if player's tool is {@heartstealer1}:
+        set item cooldown of {@heartstealer1} for player to 1 seconds
+        loop all players:
+            damage player by (3*{heartstealerStacks::%player%})
+          
+
+    if player's tool is {@poisoner1}:
+        set item cooldown of player's tool for player to 7.5 seconds
+        shoot an arrow from player at speed 0.85
+    
+    if player's tool is {@magician1}:
+        set item cooldown of player's tool for player to 1 seconds
+        shoot an ender pearl from player at speed 5
+        damage player by {magicianStack::%player%} hearts
+        if {magicianStack::%uuid of player%} is smaller than 5:
+            add 0.5 to {magicianStack::%player%}
+        else if {magicianStack::%player%} is not set:
+            add 0.5 to {magicianStack::%player%}
+        else:
+            add 3 to {magicianStack::%player%}
+          
+    if player's tool is {@magma1}:
+        set item cooldown of player's tool for player to 10 seconds
+        set {_magmaLocation::%player%} to player's location
+        execute console command "/summon area_effect_cloud ^ ^ ^ {custom_particle:{type:""flame""},Radius:3,Duration:45,potion_contents:{custom_effects:[{id:instant_damage,duration:1,amplifier:1,show_particles:1b,show_icon:1}]}}"
+        teleport nearest area effect cloud relative to location(0,0,0) to player
+        push player up at speed 0.6
+
+    if player's tool is {@thief1}:
+        set {_targetItem::%player%} to nearest player relative to player's tool
+        set {_replacedItem::%player%} to player's tool
+        replace 1 of {_replacedItem::%player%} in player's inventory with {_targetItem::%player%}
+      
+    if player's tool is {@pilot1}:
+        set item cooldown of player's tool for player to 40 seconds
+        equip player with elytra
+        enchant player's chestplate with binding curse
+        wait 10 seconds
+        set {_pilotChestplate::*} to leather chestplate
+        dye {_pilotChestplate::*} {@pilot2}
+        equip player with {_pilotChestplate::*}
+       
+    if player's tool is {@gun1}:
+        if {gunStacks::%player%} >= 6:
+            set item cooldown of player's tool for player to 8 seconds
+            set {gunStacks::%player%} to 0
+        else:
+            #shoot a shulker bullet from player at speed 1
+            add 1 to {gunStacks::%player%}
+            
+    if player's tool is {@assassin2}:
+        set item cooldown of player's tool for player to 10 seconds
+        set {_assassinLocation::%player%} to player's location
+        execute console command "/execute at @p run particle minecraft:campfire_cosy_smoke ~ ~2 ~ 0.5 0.5 0.5 0.04 1300 force @p"
+        push player up at speed 0.1
+        push player forwards at speed 0.3
+        
+    if player's tool is {@dev1}:
+        set item cooldown of player's tool for player to 0.5 seconds
+        shoot an arrow from player at speed 100
+        
+    if player's tool is {@dev2}:
+        set item cooldown of player's tool for player to 0.1 seconds 
+        shoot an arrow from player at speed 100
+
+on place of tnt:
+    if name of player's tool is not name of {@bomber}:
+        exit
+    cancel event
+
+    set item cooldown of player's tool for player to 0.5 seconds
+    remove 1 of player's tool from player
+    summon tnt at location of block
+    execute console command "/data merge entity %UUID of last spawned tnt% {fuse:20,explosion_power:3.5}"
+
+on left click:
+    if player's tool is {@archer1}:
+        if {archer.last::%player%} is set:
+            set {_wait} to difference between now and {archer.last::%player%}
+        else:
+            set {_wait} to 0.5 seconds
+        
+        if {_wait} >= 0.5 seconds:
+            set {archer.last::%player%} to now
+            shoot an arrow from player at speed 1.2
+        else:
+            send action bar "&cYou are on cooldown! %difference between {_wait} and 0.5 seconds% left" to player
+
+

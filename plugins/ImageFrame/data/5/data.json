@@ -1,0 +1,19 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 5,
+  "name": "ducksign",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1397396770039791626/Screen_Shot_2025-07-22_at_9.55.46_PM.png?ex\u003d688192a8\u0026is\u003d68804128\u0026hm\u003da3200b14a35e6ef82fafcc5245da5227146495fd02cc2e497c9a63b17773614c\u0026",
+  "width": 1,
+  "height": 1,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753235928845,
+  "mapdata": [
+    {
+      "mapid": 141,
+      "image": "0.png",
+      "markers": []
+    }
+  ]
+}

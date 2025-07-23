@@ -1,0 +1,19 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 8,
+  "name": "realduck",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1397398768583970966/Screen_Shot_2025-07-22_at_10.03.07_PM.png?ex\u003d68819484\u0026is\u003d68804304\u0026hm\u003d295019598fb51a8e69b6c295dd14213046395122a772a5b3f7005e3de3911462\u0026",
+  "width": 1,
+  "height": 1,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753236247344,
+  "mapdata": [
+    {
+      "mapid": 144,
+      "image": "0.png",
+      "markers": []
+    }
+  ]
+}

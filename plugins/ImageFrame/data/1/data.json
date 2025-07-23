@@ -1,0 +1,44 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 1,
+  "name": "luksam",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1393089447074992190/lukensam.png?ex\u003d68811066\u0026is\u003d687fbee6\u0026hm\u003da8324f5d6e6d2fb1bc86dafd25e71778770eab7f53a4c4df95ed446896f5b8b1\u0026",
+  "width": 3,
+  "height": 2,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753234595147,
+  "mapdata": [
+    {
+      "mapid": 106,
+      "image": "0.png",
+      "markers": []
+    },
+    {
+      "mapid": 107,
+      "image": "1.png",
+      "markers": []
+    },
+    {
+      "mapid": 108,
+      "image": "2.png",
+      "markers": []
+    },
+    {
+      "mapid": 109,
+      "image": "3.png",
+      "markers": []
+    },
+    {
+      "mapid": 110,
+      "image": "4.png",
+      "markers": []
+    },
+    {
+      "mapid": 111,
+      "image": "5.png",
+      "markers": []
+    }
+  ]
+}

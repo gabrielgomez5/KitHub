@@ -1,0 +1,19 @@
+{
+  "type": "com.loohp.imageframe.objectholders.URLStaticImageMap",
+  "index": 0,
+  "name": "roscoe",
+  "url": "https://cdn.discordapp.com/attachments/749837326498267209/1397391191468806176/kebab.png?ex\u003d68818d76\u0026is\u003d68803bf6\u0026hm\u003d6b879d2274d8332b29301a83baddf1ca52e35679ca31806c81ea593496f89467\u0026",
+  "width": 1,
+  "height": 1,
+  "ditheringType": "nearest-color",
+  "creator": "ada7b159-c906-4a2c-a390-c0d2914294d6",
+  "hasAccess": {},
+  "creationTime": 1753234442198,
+  "mapdata": [
+    {
+      "mapid": 105,
+      "image": "0.png",
+      "markers": []
+    }
+  ]
+}

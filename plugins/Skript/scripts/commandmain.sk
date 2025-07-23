@@ -1,0 +1,113 @@
+
+command /itemdata:
+    permission: *
+    trigger:
+        set {_test} to amount of sticks in player's inventory
+        send "%player's held item%" to player
+        send "%{_test}%"
+
+command /smite <player>:
+    permission: *
+    trigger:
+        strike lightning effect at arg-1
+
+command /inGame <boolean>:
+    permission: op
+    trigger:
+        if arg-1 is true:
+            set {ingame} to true
+        else:
+            set {ingame} to false
+
+command /gamestarting <boolean>:
+    permission: op
+    trigger:
+        if arg-1 is true:
+            set {gameStarting} to true
+        else:
+            set {gameStarting} to false
+
+        
+
+command /testcommand1:
+    permission: op
+    trigger:
+        execute console command "/give @a[level=10] diamond_leggings[trim={pattern:shaper,material:netherite},attribute_modifiers=[{type:armor,amount:2,slot:legs}],unbreakable={},tooltip_display={hidden_components:[unbreakable]}]"
+
+command /heal <player>:
+    permission: *
+    trigger:
+        apply potion of instant health 5 to arg-1 for 1 second
+
+command /fling <player>:
+    trigger:
+        push arg-1 up at speed 4000
+        push arg-1 backwards at speed 4000
+        
+command /endgame:
+    permission: op
+    trigger:
+        execute console command "/team join Spectator @a"
+
+command /hok <text>:
+    permission: op
+    trigger:
+        if arg-1 is "on":
+            set {HoKToggle} to "true"
+        else:
+            set {HoKToggle} to "false"
+
+
+command /launchpad <integer> <integer> <integer> <integer>:
+    trigger:
+        push nearest player relative to location(arg-1,arg-2,arg-3) forwards at speed 0.5
+        push nearest player relative to location(arg-1,arg-2,arg-3) up at speed arg-4
+
+        
+command /ltp <integer>. <integer> <integer>:
+    trigger:
+        teleport player to location(arg-1,arg-2,arg-3)
+
+command /ltp2 <player>:
+    trigger:
+        teleport player to arg-1
+
+command /lcreative:
+    trigger:
+        set the player's gamemode to creative
+
+command /ladventure:
+    trigger:
+        set the player's gamemode to adventure
+
+#on command "/kill @e":
+#  if command sender is player:
+#    cancel event
+#    kick the player due to "No."
+
+
+
+on command "/tp @e":
+  if command sender is player:
+    cancel event
+    kick the player due to "No."
+
+on command "/ban Rirrika":
+    cancel event
+    send message "No." to player
+
+on leave:
+    execute console command "/scoreboard players reset * allScore"
+
+
+
+
+on death of player:
+    if {HoKToggle} is "true":
+        victim is a player
+        attacker is a player
+        heal attacker by 10 hearts
+
+
+
+

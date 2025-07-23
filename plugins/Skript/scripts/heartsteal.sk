@@ -1,0 +1,27 @@
+options:
+    heartsteal: wooden sword named "&rHeartstealer"
+
+command /heartsteal:
+    trigger:
+        give player 1 of {@heartsteal}
+
+on join:
+    if {damageDealt::%uuid of player%} is not set:
+        set {damageDealt::%uuid of player%} to 0
+
+on damage of player:
+    if name of tool of attacker is name of {@heartsteal}:
+        add (0.5 * damage) to {damageDealt::%uuid of attacker%}
+        broadcast {damageDealt::%uuid of attacker%}
+
+on right click:
+    if name of tool of player is name of {@heartsteal}:
+        if {damageDealt::%uuid of player%} is greater than 0:
+            set {_playersNearby::*} to all players within radius 5 of player
+            if size of {_playersNearby::*} is greater than 1:    
+                set {_damageToDeal} to {damageDealt::%uuid of player%} / (size of {_playersNearby::*} - 1)
+                broadcast {_damageToDeal}
+                loop {_playersNearby::*}:
+                    if uuid of loop-value is not uuid of player:
+                        damage loop-value by {_damageToDeal}
+                set {damageDealt::%uuid of player%} to 0
